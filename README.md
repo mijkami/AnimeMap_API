@@ -5,9 +5,10 @@ FastAPI implementation for the [anime_map project](https://github.com/mijkami/an
 - clone projet
 - create **/data** folder at the root
 - add in /data the following files:
- - anime_df_relevant_PG.csv
- - active_users_df_10PlusRatings_partial.csv
- - models_anime_map_knn_model.joblib
+
+  - anime_df_relevant_PG.csv
+  - active_users_df_10PlusRatings_partial.csv
+  - models_anime_map_knn_model.joblib
 # How to use it
 
 - pick an anime name from [MyAnimeList](https://myanimelist.net/topanime.php) (for example 'Naruto')
