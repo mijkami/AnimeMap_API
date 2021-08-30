@@ -36,23 +36,20 @@ def process_data(name_file):
     
     return pivot_df, anime_name_pivot_df
 
-def recommendation_10PlusRatings(anime_name, nb_recomendation = 10):
+def recommendation_10PlusRatings(anime_name, nb_recomendation):
     pivot_df, anime_name_pivot_df = process_data('active_users_df_10PlusRatings_partial')
     model = get_model(model_path)
     index_nb = anime_name_pivot_df.index[anime_name_pivot_df['Name'] == anime_name].tolist()[0]
     distances, indices = model.kneighbors(pivot_df.iloc[index_nb,:].values.reshape(1, -1), n_neighbors = nb_recomendation + 1)
 
     prediction = []
-    for i in range(0, len(distances.flatten())):
-        if i == 0:
-            prediction.append([pivot_df.index[indices.flatten()[i]],0])
-        else:
-            prediction.append([pivot_df.index[indices.flatten()[i]],distances.flatten()[i]])
-    results = []
+    for i in range(1, len(distances.flatten())):
+        prediction.append([pivot_df.index[indices.flatten()[i]],distances.flatten()[i]])
+    results = {}
     for i in range(len(prediction)):
         anime_name = anime_name_pivot_df.query(f'anime_id == {prediction[i][0]}').iloc[0].Name
         distance = prediction[i][1]
-        results.append([anime_name,distance])
+        results[f'{anime_name}'] = distance
     return results
 
 

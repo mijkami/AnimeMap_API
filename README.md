@@ -13,4 +13,5 @@ FastAPI implementation for the [anime_map project](https://github.com/mijkami/an
 
 - pick an anime name from [MyAnimeList](https://myanimelist.net/topanime.php) (for example 'Naruto')
 - ask the API at the address it is installed, for example on localhost asking for 'Naruto': ```http://127.0.0.1:8000/predict?anime=Naruto```
+- if you want a specific length, add a length argument like this: ```http://127.0.0.1:8000/predict?anime=Bleach&length=40```
 - use the given .json for your frontend purposes
