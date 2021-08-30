@@ -1,0 +1,4 @@
+fastapi
+joblib
+pandas
+sklearn >= 0.24.2
