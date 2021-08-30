@@ -22,11 +22,8 @@ def index():
 
 
 @app.get("/predict")
-def predict_animes(predict_input):
-    params = {
-            "predict_input": [predict_input]
-                }
-    y_pred = predict.recommendation_10PlusRatings(f'{predict_input}')
-    return {"features": params,
+def predict_animes(anime):
+    y_pred = predict.recommendation_10PlusRatings(f'{anime}')
+    return {"predict_input": anime,
             "prediction": y_pred
             }        

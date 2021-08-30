@@ -2,15 +2,15 @@ import joblib
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 
-model_path = "../data/models_anime_map_knn_model.joblib"
+model_path = "data/models_anime_map_knn_model.joblib"
 model = joblib.load(model_path)
 
 def get_anime():
-    anime_df_relevant_PG = pd.read_csv("../data/anime_df_relevant_PG.csv")
+    anime_df_relevant_PG = pd.read_csv("data/anime_df_relevant_PG.csv")
     return anime_df_relevant_PG.rename(columns={'MAL_ID' : 'anime_id'})
 
 def get_data(name_file):
-    data = pd.read_csv(f'../data/{name_file}.csv')
+    data = pd.read_csv(f'data/{name_file}.csv')
     return data
 
 def get_model(path):
