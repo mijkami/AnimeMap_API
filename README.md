@@ -9,6 +9,24 @@ FastAPI implementation for the [anime_map project](https://github.com/mijkami/an
   - anime_df_relevant_PG.csv
   - active_users_df_10PlusRatings_partial.csv
   - models_anime_map_knn_model.joblib
+
+# Run the server
+## Run locally
+- > make run_api
+- access http://127.0.0.1:8000
+
+## Run on Docker
+### (linux) enable and start docker
+- sudo systemctl enable docker
+- sudo systemctl start docker
+
+### create docker image
+- sudo docker build -t anime_map_api .   
+
+### run the server
+- sudo docker run -it -e PORT=8000 -p 8000:8000 anime_map_api
+
+
 # How to use it
 
 - pick an anime name from [MyAnimeList](https://myanimelist.net/topanime.php) (for example 'Naruto')
