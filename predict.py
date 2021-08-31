@@ -2,11 +2,15 @@ import joblib
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 
-model_path = "data/models_anime_map_knn_model.joblib"
-model = joblib.load(model_path)
+
+MODEL_PATH = "data/models_anime_map_knn_model.joblib"
+ANIME_DF_PATH = "data/anime_df_relevant_PG.csv"
+USERS_DF_NAME = 'active_users_df_10PlusRatings_partial'
+
+
 
 def get_anime():
-    anime_df_relevant_PG = pd.read_csv("data/anime_df_relevant_PG.csv")
+    anime_df_relevant_PG = pd.read_csv(ANIME_DF_PATH)
     return anime_df_relevant_PG.rename(columns={'MAL_ID' : 'anime_id'})
 
 def get_data(name_file):
@@ -14,7 +18,7 @@ def get_data(name_file):
     return data
 
 def get_model(path):
-    return joblib.load(model_path)
+    return joblib.load(path)
 
 def process_data(name_file):
     data_users_df = get_data(name_file)
@@ -37,8 +41,8 @@ def process_data(name_file):
     return pivot_df, anime_name_pivot_df
 
 def recommendation_10PlusRatings(anime_name, nb_recomendation):
-    pivot_df, anime_name_pivot_df = process_data('active_users_df_10PlusRatings_partial')
-    model = get_model(model_path)
+    pivot_df, anime_name_pivot_df = process_data(USERS_DF_NAME)
+    model = get_model(MODEL_PATH)
     index_nb = anime_name_pivot_df.index[anime_name_pivot_df['Name'] == anime_name].tolist()[0]
     distances, indices = model.kneighbors(pivot_df.iloc[index_nb,:].values.reshape(1, -1), n_neighbors = nb_recomendation + 1)
 
