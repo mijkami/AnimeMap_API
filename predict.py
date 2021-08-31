@@ -33,7 +33,7 @@ def recommendation_10PlusRatings(anime_name, nb_recomendation, model):
     distances, indices = model.kneighbors(pivot_df.iloc[index_nb,:].values.reshape(1, -1), n_neighbors = nb_recomendation + 1)
     
     prediction = []
-    for i in range(1, len(distances.flatten())):
+    for i in range(0, len(distances.flatten())):
         prediction.append([pivot_df.index[indices.flatten()[i]],distances.flatten()[i]])
     results = {}
     for i in range(len(prediction)):
