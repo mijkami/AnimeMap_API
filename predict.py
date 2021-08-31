@@ -25,8 +25,8 @@ def recommendation_10PlusRatings(anime_name, nb_recomendation, model):
         anime_name_pivot_df = get_data(NOTATION_ANIME_NAME_PIVOT_NAME)
         model = get_model(NOTATION_MODEL_PATH)
     elif model == 'completed':
-        pivot_df = get_data(RATING_COMPLETED_ANIME_NAME_PIVOT_NAME)
-        anime_name_pivot_df = get_data(RATING_COMPLETED_PIVOT_DF_NAME)
+        pivot_df = get_data(RATING_COMPLETED_PIVOT_DF_NAME)
+        anime_name_pivot_df = get_data(RATING_COMPLETED_ANIME_NAME_PIVOT_NAME)
         model = get_model(RATING_COMPLETED_MODEL_PATH)
 
     index_nb = anime_name_pivot_df.index[anime_name_pivot_df['Name'] == anime_name].tolist()[0]
