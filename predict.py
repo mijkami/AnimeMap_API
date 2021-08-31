@@ -3,9 +3,13 @@ import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 
 
-MODEL_PATH = "data/anime_map_data_animelist_100plus_PG_knn_model.joblib"
-PIVOT_DF_NAME = "anime_map_data_animelist_100plus_PG_PCA_vector_df"
-ANIME_NAME_PIVOT_NAME = "anime_map_data_animelist_100plus_PG_anime_name_pivot_df"
+NOTATION_MODEL_PATH = "data/anime_map_data_animelist_100plus_PG_knn_model.joblib"
+NOTATION_PIVOT_DF_NAME = "anime_map_data_animelist_100plus_PG_PCA_vector_df"
+NOTATION_ANIME_NAME_PIVOT_NAME = "anime_map_data_animelist_100plus_PG_anime_name_pivot_df"
+
+RATING_COMPLETED_MODEL_PATH = "data/anime_map_data_rating_complete_100plus_PG_knn_model.joblib"
+RATING_COMPLETED_PIVOT_DF_NAME = "anime_map_data_rating_complete_100plus_PG_PCA_vector_df"
+RATING_COMPLETED_ANIME_NAME_PIVOT_NAME = "anime_map_data_rating_complete_100plus_PG_anime_name_pivot_df"
 
 
 def get_data(name_file):
@@ -15,32 +19,16 @@ def get_data(name_file):
 def get_model(path):
     return joblib.load(path)
 
+def recommendation_10PlusRatings(anime_name, nb_recomendation, model):
+    if model == 'notation':
+        pivot_df = get_data(NOTATION_PIVOT_DF_NAME)
+        anime_name_pivot_df = get_data(NOTATION_ANIME_NAME_PIVOT_NAME)
+        model = get_model(NOTATION_MODEL_PATH)
+    elif model == 'completed':
+        pivot_df = get_data(RATING_COMPLETED_ANIME_NAME_PIVOT_NAME)
+        anime_name_pivot_df = get_data(RATING_COMPLETED_PIVOT_DF_NAME)
+        model = get_model(RATING_COMPLETED_MODEL_PATH)
 
-# def process_data(name_file):
-#     data_users_df = get_data(name_file)
-#     data_users_df['rating'] = data_users_df['rating']/10
-    
-#     anime_df_relevant_PG = get_anime()
-#     anime_name_df = anime_df_relevant_PG[['anime_id','Name']]
-#     data_users_df_merge = data_users_df.merge(anime_name_df, on = 'anime_id', how='inner')
-#     pivot_df = data_users_df_merge.pivot_table(index='anime_id',columns='user_id',values='rating').fillna(0)
-    
-#     anime_Genres_df = anime_df_relevant_PG[['anime_id','Genres']]
-#     anime_Genres_df_encoded = pd.concat(objs = [anime_Genres_df.drop(columns = 'Genres', axis =1), anime_Genres_df['Genres'].str.get_dummies(sep=", ")], axis = 1)
-#     anime_Genres_df_encoded = anime_Genres_df_encoded.set_index('anime_id')
-    
-#     pivot_df = pivot_df.merge(anime_Genres_df_encoded, how='inner',left_index=True, right_index=True)
-#     anime_name_pivot_df = data_users_df_merge[['anime_id','Name']].drop_duplicates()
-#     anime_name_pivot_df = anime_name_pivot_df.sort_values('anime_id')
-#     anime_name_pivot_df = anime_name_pivot_df.reset_index().drop(columns = 'index')
-    
-#     return pivot_df, anime_name_pivot_df
-
-
-def recommendation_10PlusRatings(anime_name, nb_recomendation):
-    pivot_df = get_data(PIVOT_DF_NAME)
-    anime_name_pivot_df = get_data(ANIME_NAME_PIVOT_NAME)
-    model = get_model(MODEL_PATH)
     index_nb = anime_name_pivot_df.index[anime_name_pivot_df['Name'] == anime_name].tolist()[0]
     distances, indices = model.kneighbors(pivot_df.iloc[index_nb,:].values.reshape(1, -1), n_neighbors = nb_recomendation + 1)
     

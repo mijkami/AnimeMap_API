@@ -22,8 +22,11 @@ def index():
 
 
 @app.get("/predict")
-def predict_animes(anime, length:int = 20):
-    y_pred = predict.recommendation_10PlusRatings(anime, length)
+def predict_animes(anime, length:int = 20, model='notation'):
+    models_list = ['completed', 'notation']
+    if model not in models_list:
+        raise ValueError("Invalid model type. Expected one of: %s" % models_list)
+    y_pred = predict.recommendation_10PlusRatings(anime, length, model)
     return {"predict_input": anime,
             "prediction": y_pred
             }        
