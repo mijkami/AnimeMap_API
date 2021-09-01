@@ -13,7 +13,7 @@ FastAPI implementation for the [anime_map project](https://github.com/mijkami/an
 # Run the server
 ## Run locally
 - > make run_api
-- access http://127.0.0.1:8000
+- access http://127.0.0.1:8080
 
 ## Run on Docker
 ### (linux) enable and start docker
@@ -24,12 +24,12 @@ FastAPI implementation for the [anime_map project](https://github.com/mijkami/an
 - sudo docker build -t anime_map_api .   
 
 ### run the server
-- sudo docker run -it -e PORT=8000 -p 8000:8000 anime_map_api
+- sudo docker run -it -e PORT=8080 -p 8080:8080 anime_map_api
 
 
 # How to use it
 
 - pick an anime name from [MyAnimeList](https://myanimelist.net/topanime.php) (for example 'Naruto')
-- ask the API at the address it is installed, for example on localhost asking for 'Naruto': ```http://127.0.0.1:8000/predict?anime=Naruto```
-- if you want a specific length, add a length argument like this: ```http://127.0.0.1:8000/predict?anime=Bleach&length=40```
+- ask the API at the address it is installed, for example on localhost asking for 'Naruto': ```http://127.0.0.1:8080/predict?anime=Naruto```
+- if you want a specific length, add a length argument like this: ```http://127.0.0.1:8080/predict?anime=Bleach&length=40```
 - use the given .json for your frontend purposes
