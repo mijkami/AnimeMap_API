@@ -19,7 +19,7 @@ def get_data(name_file):
 def get_model(path):
     return joblib.load(path)
 
-def recommendation_10PlusRatings(anime_name, nb_recomendation, model):
+def recommendation_10PlusRatings(anime_name, nb_recomendation, model='notation'):
     if model == 'notation':
         pivot_df = get_data(NOTATION_PIVOT_DF_NAME)
         anime_name_pivot_df = get_data(NOTATION_ANIME_NAME_PIVOT_NAME)
@@ -37,9 +37,11 @@ def recommendation_10PlusRatings(anime_name, nb_recomendation, model):
         prediction.append([pivot_df.index[indices.flatten()[i]],distances.flatten()[i]])
     results = {}
     for i in range(len(prediction)):
+        # add anime_id & update results to add anime_id in json
         anime_name = anime_name_pivot_df.iloc[prediction[i][0]].Name
+        anime_id = anime_name_pivot_df.iloc[prediction[i][0]].anime_id
         distance = prediction[i][1]
-        results[f'{anime_name}'] = distance
+        results[f'{anime_name}'] = {'distance': distance, 'anime_id' : int(anime_id)}
     return results
 
 
